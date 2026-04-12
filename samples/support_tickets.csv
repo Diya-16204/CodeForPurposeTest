@@ -1,0 +1,13 @@
+Month,Channel,Priority,Category,TicketsOpened,TicketsResolved,AvgResolutionHours,Escalations
+2026-01,Phone,High,Payments,120,110,18,14
+2026-01,Chat,Medium,Login,150,145,6,5
+2026-01,Email,Low,Statements,90,88,20,2
+2026-02,Phone,High,Payments,135,120,22,18
+2026-02,Chat,Medium,Login,142,140,5,4
+2026-02,Email,Low,Statements,95,92,21,3
+2026-03,Phone,High,Payments,128,126,16,11
+2026-03,Chat,Medium,Login,160,155,4,3
+2026-03,Email,Low,Statements,98,96,19,2
+2026-04,Phone,High,Cards,140,130,20,15
+2026-04,Chat,Medium,Cards,125,121,7,6
+2026-04,Email,Low,Statements,102,100,18,2
