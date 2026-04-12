@@ -1,4 +1,5 @@
-# Nexus AI — Connected Analytics Workspace  (Theme: Talk To Data)
+# TEAM - Mission IMPossible
+# 🤖 Nexus AI — Connected Analytics Workspace  (Theme: Talk To Data)
 
 **NatWest Group *present* Code for Purpose – India Hackathon** · Self-service “talk to data” prototype
 
@@ -397,3 +398,16 @@ Automated **unit/integration tests** are **not** included in this submission. Th
 ## Support
 
 For judging: start **MongoDB**, then **AI engine**, **backend**, **frontend** in that order, confirm `GET http://localhost:8000/health` and `GET http://localhost:4000/health`, then use the UI as shown in **`docs/screenshots/`**.
+
+---
+
+## Collaborators
+
+Nexus AI was built for the **NatWest Group Code for Purpose Hackathon** by:
+
+* **Kunal Purohit** — [GitHub Profile](https://github.com/KunalInTech)
+* **Shivam Raj** — [GitHub Profile](https://github.com/ShivamRaj01S)
+* **Shambhavi Mishra** — [GitHub Profile](https://github.com/Diya-16204)
+* **Yash Singhal** — [GitHub Profile](https://github.com/YashSinghal09)
+
+---
