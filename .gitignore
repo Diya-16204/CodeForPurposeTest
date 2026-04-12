@@ -1,0 +1,11 @@
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.env
+backend/uploads/tmp/*
+!backend/uploads/tmp/.gitkeep
+ai_engine/storage/datasets/*
+!ai_engine/storage/datasets/.gitkeep
+dist/
+.DS_Store

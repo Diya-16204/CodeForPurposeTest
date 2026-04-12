@@ -1,0 +1,13 @@
+Month,BranchType,Region,Transactions,AvgWaitMinutes,CustomerSatisfaction,NewAccountsOpened,Complaints
+2026-01,Urban,North,18200,9,4.4,320,26
+2026-01,Suburban,South,13400,11,4.1,240,31
+2026-01,Rural,West,7600,7,4.5,110,12
+2026-02,Urban,North,17600,10,4.3,305,28
+2026-02,Suburban,South,12900,13,3.9,225,38
+2026-02,Rural,West,7900,8,4.4,116,14
+2026-03,Urban,North,18800,8,4.6,342,20
+2026-03,Suburban,South,13800,12,4.0,238,34
+2026-03,Rural,West,8100,7,4.6,121,10
+2026-04,Urban,North,19100,8,4.7,350,18
+2026-04,Suburban,South,14100,10,4.2,245,27
+2026-04,Rural,West,8300,6,4.7,128,9

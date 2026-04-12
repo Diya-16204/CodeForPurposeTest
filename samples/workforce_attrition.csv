@@ -1,0 +1,13 @@
+Quarter,Department,Region,Headcount,VoluntaryExits,InvoluntaryExits,NewHires,AvgTenureYears,EngagementScore
+2025-Q3,Operations,North,420,12,3,18,4.8,78
+2025-Q3,Technology,South,260,9,1,14,3.9,81
+2025-Q3,Risk,West,180,4,1,6,5.6,84
+2025-Q4,Operations,North,426,15,2,20,4.7,76
+2025-Q4,Technology,South,265,11,2,12,3.8,79
+2025-Q4,Risk,West,181,3,1,5,5.7,85
+2026-Q1,Operations,North,429,10,2,16,4.9,80
+2026-Q1,Technology,South,264,13,1,10,3.7,77
+2026-Q1,Risk,West,182,2,0,4,5.8,86
+2026-Q2,Operations,North,433,9,1,15,5.0,82
+2026-Q2,Technology,South,260,8,1,11,3.9,83
+2026-Q2,Risk,West,186,2,0,7,5.9,87

@@ -1,0 +1,45 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+  ai_engine:
+    build:
+      context: ./ai_engine
+    restart: unless-stopped
+    environment:
+      AI_STORAGE_DIR: /app/storage/datasets
+      MAX_ANALYSIS_ROWS: 10000
+      LLM_PROVIDER: ${LLM_PROVIDER:-none}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-}
+    volumes:
+      - ai_engine_data:/app/storage/datasets
+    ports:
+      - "8000:8000"
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - ai_engine
+    environment:
+      PORT: 4000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongo:27017/talk_to_data
+      AI_ENGINE_URL: http://ai_engine:8000
+      UPLOAD_DIR: uploads/tmp
+      MAX_UPLOAD_MB: 50
+      CORS_ORIGIN: ${CORS_ORIGIN}
+    ports:
+      - "4000:4000"
+
+volumes:
+  mongo_data:
+  ai_engine_data:
