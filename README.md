@@ -1,18 +1,18 @@
 # Talk to Data
 
-Self-service intelligence platform for the NatWest Group Code for Purpose Hackathon. Users upload one or more datasets, build a connected analytics workspace, and ask everyday-language questions to receive aggregate-only narratives, charts, and transparent source notes.
+Self-service intelligence platform for the NatWest Group Code for Purpose Hackathon. Users upload a dataset, ask everyday-language questions, and receive aggregate-only narratives, charts, and transparent source notes.
 
 ## Architecture
 
-- `frontend`: React + Vite connected-workspace dashboard with multi-file upload, charts, joins, and chat.
+- `frontend`: React + Vite upload and 3-pane dashboard.
 - `backend`: Node.js + Express orchestration API with `multer`, MongoDB models, upload forwarding, query history, and PII response scrubbing.
-- `ai_engine`: FastAPI + Pandas/OpenPyXL/SQLite service for secure ingestion, relationship detection, merged workspace previews, and aggregate-only analysis.
+- `ai_engine`: FastAPI + Pandas/OpenPyXL/SQLite service for secure ingestion and aggregate-only analysis.
 - `docker-compose.yml`: MongoDB helper for local development.
 
 ## Compliance Notes
 
 - Source files include the ISA / Apache-2.0 header. Python and HTML use language-safe comment wrappers so the services remain executable.
-- Uploaded files are never passed directly to the UI. Node stores incoming uploads only long enough to forward them to the AI service, then removes the temporary copy.
+- Uploaded files are never passed directly to the UI. Node stores the incoming upload only long enough to forward it to the AI service, then removes the temporary copy.
 - The AI service stores datasets in `ai_engine/storage/datasets` and reads SQLite files through read-only connections.
 - The analysis layer avoids detected PII columns and returns grouped aggregate outputs only.
 - Secrets are read from environment variables. Use the `.env.example` files as templates.
@@ -56,37 +56,95 @@ Self-service intelligence platform for the NatWest Group Code for Purpose Hackat
 
 The frontend runs on Vite's local URL, usually `http://localhost:5173`.
 
-## Current Workflow
+## Deployed Safely
 
-1. Upload one or more CSV / JSON / Excel / SQLite files.
-2. The AI engine infers schema and, for multiple flat files, detects likely relationships and builds a merged workspace.
-3. The backend stores workspace metadata, generated metric definitions, relationships, and query history in MongoDB.
-4. The frontend shows upload-time dashboard previews, detected joins, recent prompts, and chat-driven aggregate insights.
+Deployed this repository as four separate pieces:
 
-## Deploy
+1. `frontend` on Vercel
+2. `backend` as a Node web service on Render
+3. `ai_engine` as a Python web service on Render
+4. MongoDB Atlas for the database
 
-### Vercel + Render
+Deployment order:
 
-- Deploy `frontend` to Vercel with root directory `frontend`.
-- Set `VITE_API_BASE_URL` to your backend public URL, for example:
+1. Created MongoDB Atlas and copy the connection string.
+2. Deployed `ai_engine` and confirm `/health` returns `ok`.
+3. Deployed `backend` with the Atlas URI and AI engine URL.
+4. Deployed `frontend` with the backend `/api` URL.
+5. Updated backend `CORS_ORIGIN` to the final frontend URL and redeployed once.
 
-  ```bash
-  https://your-backend.onrender.com/api
-  ```
+Minimum production environment variables:
 
-- Deploy `ai_engine` and `backend` to Render as Docker web services.
-- Use MongoDB Atlas or another managed MongoDB and point the backend `MONGODB_URI` there.
+- `frontend`
+  - `VITE_API_BASE_URL=https://<your-backend-domain>/api`
+- `backend`
+  - `PORT=4000`
+  - `NODE_ENV=production`
+  - `MONGODB_URI=<your-atlas-connection-string>`
+  - `AI_ENGINE_URL=https://<your-ai-engine-domain>`
+  - `UPLOAD_DIR=uploads/tmp`
+  - `MAX_UPLOAD_MB=50`
+  - `CORS_ORIGIN=https://<your-frontend-domain>`
+- `ai_engine`
+  - `AI_STORAGE_DIR=storage/datasets`
+  - `MAX_ANALYSIS_ROWS=10000`
+  - `LLM_PROVIDER=none`
+  - `GEMINI_API_KEY=`
+  - `GEMINI_MODEL=`
+  - `GROQ_API_KEY=`
+  - `GROQ_MODEL=llama-3.1-8b-instant`
 
-### Docker Compose
+Production start commands:
 
-For a VPS or local Docker host, copy the production env template and run:
+- `backend`
+  - Build: `npm install`
+  - Start: `npm start`
+- `ai_engine`
+  - Build: `pip install -r requirements.txt`
+  - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- `frontend`
+  - Build: `npm install && npm run build`
+  - Publish directory: `dist`
+
+## Run On Live Deployment
+
+Use this order every time you test the deployed app:
+
+1. Open the backend health URL:
+
+   ```bash
+   https://<your-backend-domain>/health
+   ```
+
+   Wait until it returns a JSON response with `status: "ok"`.
+
+2. Open the AI engine health URL:
+
+   ```bash
+   https://<your-ai-engine-domain>/health
+   ```
+
+   Wait until it returns a JSON response with `status: "ok"`.
+
+3. If either service is still waking up or restarting, wait and refresh until both health checks return `ok`.
+
+4. After both services are healthy, open the deployed frontend URL:
+
+   ```bash
+   https://<your-frontend-domain>
+   ```
+
+5. Upload sample data and click `Build workspace`.
+
+6. Analyze the data then.
+
+Example with deployed URLs:
 
 ```bash
-copy .env.production.example .env.production
-docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+Backend health: https://codeforpurposetest.onrender.com/health
+AI health: https://code-for-purpose-ai-2.onrender.com/health
+Frontend: https://code-for-purpose-test.vercel.app
 ```
-
-Set `CORS_ORIGIN` in `.env.production` to your Vercel domain.
 
 ## API Contract
 
@@ -107,11 +165,3 @@ The backend returns this shape for chat responses:
   }
 }
 ```
-
-The backend also supports connected workspace upload through:
-
-```json
-POST /api/upload-multiple
-```
-
-which returns workspace metadata including `relationships`, `source_files`, `dashboard_preview`, and `upload_insight`.
