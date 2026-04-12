@@ -64,7 +64,48 @@ cfp/
 │   └── screenshots/          # UI walkthrough PNGs (01.png … 23.png)
 └── samples/                  # Example prompts / notes
 ```
+---
+## Run On Live Deployment
 
+Use this order every time you test the deployed app:
+
+1. Open the backend health URL:
+
+   ```bash
+   https://<your-backend-domain>/health
+   ```
+
+   Wait until it returns a JSON response with `status: "ok"`.
+
+2. Open the AI engine health URL:
+
+   ```bash
+   https://<your-ai-engine-domain>/health
+   ```
+
+   Wait until it returns a JSON response with `status: "ok"`.
+
+3. If either service is still waking up or restarting, wait and refresh until both health checks return `ok`.
+
+4. After both services are healthy, open the deployed frontend URL:
+
+   ```bash
+   https://<your-frontend-domain>
+   ```
+
+5. Upload sample data and click `Build workspace`.
+
+6. Analyze the data then.
+
+Example with deployed URLs:
+
+```bash
+Backend health: https://codeforpurposetest.onrender.com/health
+AI health: https://code-for-purpose-ai-2.onrender.com/health
+Frontend: https://code-for-purpose-test.vercel.app
+```
+
+## If any problem on live server  please ensure to run locally.
 ---
 
 ## Install and run (local)
