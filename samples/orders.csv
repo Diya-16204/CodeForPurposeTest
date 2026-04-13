@@ -1,0 +1,13 @@
+order_id,customer_id,product_id,order_date,quantity,channel,region,ad_spend,complaints
+O001,C001,P001,2026-01-01,2,Online,North,200,0
+O002,C002,P002,2026-01-01,1,Offline,South,150,1
+O003,C003,P003,2026-01-02,3,Online,East,180,0
+O004,C004,P001,2026-01-02,1,Offline,West,220,0
+O005,C005,P002,2026-01-03,2,Online,North,140,1
+O006,C006,P003,2026-01-03,1,Offline,South,160,0
+O007,C001,P001,2026-02-01,1,Online,North,180,0
+O008,C002,P002,2026-02-01,2,Offline,South,130,2
+O009,C003,P003,2026-02-02,2,Online,East,170,1
+O010,C004,P001,2026-02-02,1,Offline,West,200,0
+O011,C005,P002,2026-02-03,1,Online,North,120,1
+O012,C006,P003,2026-02-03,2,Offline,South,150,0
