@@ -211,9 +211,17 @@ The following captures are from a single demo session (chronological filenames `
 
 ![Upload and merged analytics dashboard](docs/screenshots/14.png)
 
+NexusAi- processing the question --(in live hosted server)
+
+![processing the question](docs/screenshots/28.png)
+
 **Extended Q&A** — multiple user questions and assistant answers with updated insight panel.
 
 ![Chat session with insights](docs/screenshots/22.png)
+
+Database.
+
+ ![database updation on uploads](docs/screenshots/29.jpeg)
 
 **Additional frames** (same folder): `01.png`, `02.png`, `04.png`–`14.png`, `16.png`–`21.png`, `23.png`.
 
